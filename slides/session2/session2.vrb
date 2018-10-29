@@ -1,8 +1,20 @@
-\frametitle{Projektet}
-Op til KV17 lavede DR en \href{https://www.dr.dk/nyheder/politik/kv17/kandidat-testen}{kandidattest}. Alle kandidaterne har selvfølgelig svaret på spørgsmålene. De svar vil vi gerne have.
+\frametitle{Opgave 2.1.2}
 
-Denne gang:
 \begin{itemize}
-  \item
+  \item Hvis ikke i har installeret \texttt{requests} er det en god ide at gøre det nu
+  \item Google:
+  \begin{itemize}
+    \item ``python requests get link''
+    \item ``python requests json''
+  \end{itemize}
 \end{itemize}
 
+\pause
+\begin{lstlisting}[language=python]
+import requests
+
+url = #[FILL IN]
+
+response = requests.get(url)
+kommuner = response.json()
+\end{lstlisting}
