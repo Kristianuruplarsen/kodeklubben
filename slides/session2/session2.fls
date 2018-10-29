@@ -461,6 +461,9 @@ INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmss8.tfm
 INPUT session2.vrb
 INPUT session2.vrb
+OUTPUT session2.vrb
+INPUT session2.vrb
+INPUT session2.vrb
 OUTPUT session2.nav
 OUTPUT session2.toc
 OUTPUT session2.snm

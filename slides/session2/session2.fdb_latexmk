@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1540807932 "session2.tex" "session2.pdf" "session2" 1540807934
+["pdflatex"] 1540810442 "session2.tex" "session2.pdf" "session2" 1540810443
   "/etc/texmf/web2c/texmf.cnf" 1526990803 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ectt1000.tfm" 1480098696 1536 06717a2b50de47d4087ac0e6cd759455 ""
@@ -263,16 +263,16 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1526990852 2700761 ac0584cc9514ab21918550a6948c4ee2 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1539590199 4131270 bbff13b8da8b78a15e5efedb3be62806 ""
   "figs/setup.PNG" 1540807826 39477 6c5e23e47e488b770a5ed479c514f80a ""
-  "session2.aux" 1540807934 2261 a8cdb7dde14e1cb474bec86a4d908ea3 ""
-  "session2.nav" 1540807934 1097 9c9a6c2f91baac7e4ced0f9fd6b4cf2e ""
-  "session2.out" 1540807934 45 e3b029cd9483116bba205dabeec4a076 ""
-  "session2.tex" 1540807898 4548 b16afb086b0a146abb98346490de8e45 ""
+  "session2.aux" 1540810443 2389 2e60724954ad1928dd26443fc0835f56 ""
+  "session2.nav" 1540810443 1189 6e8e773457269cc6bcd49ee7725ffb0b ""
+  "session2.out" 1540810443 45 e3b029cd9483116bba205dabeec4a076 ""
+  "session2.tex" 1540810435 4783 cf2eb098e0908301883ed0823619ff28 ""
   (generated)
-  "session2.out"
-  "session2.toc"
-  "session2.aux"
-  "session2.pdf"
   "session2.nav"
-  "session2.log"
   "session2.snm"
+  "session2.aux"
   "session2.vrb"
+  "session2.pdf"
+  "session2.log"
+  "session2.toc"
+  "session2.out"

@@ -1,20 +1,4 @@
-\frametitle{Opgave 2.1.2}
-
+\frametitle{Opgave 2.1.3}
 \begin{itemize}
-  \item Hvis ikke i har installeret \texttt{requests} er det en god ide at gøre det nu
-  \item Google:
-  \begin{itemize}
-    \item ``python requests get link''
-    \item ``python requests json''
+    \item Kig i den json fil i har downloadet - er der
   \end{itemize}
-\end{itemize}
-
-\pause
-\begin{lstlisting}[language=python]
-import requests
-
-url = #[FILL IN]
-
-response = requests.get(url)
-kommuner = response.json()
-\end{lstlisting}
