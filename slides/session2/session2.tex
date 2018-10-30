@@ -170,12 +170,12 @@ Næste gang:
   \end{itemize}
 
   \begin{lstlisting}[language=python]
-  import requests
+import requests
 
-  url = #[FILL IN]
+url = #[FILL IN]
 
-  response = requests.get(url)
-  kommuner = response.json()
+response = requests.get(url)
+kommuner = response.json()
   \end{lstlisting}
 \end{frame}
 
@@ -185,15 +185,15 @@ Næste gang:
 
     \item I kan hente alle slugs med et loop:
     \begin{lstlisting}[language=python]
-    container = list()
-    for x in kommuner['constituencies']:
-        if not x['slug'] == 'ikke-oplyst':
-            container.append(x['slug'])
+slugs = list()
+for x in kommuner['constituencies']:
+    if not x['slug'] == 'ikke-oplyst':
+        slugs.append(x['slug'])
     \end{lstlisting}
     \item Eller med en \textit{list comprehension}:
     \begin{lstlisting}[language=python]
-    slugs = [x['slug'] for x in kommuner['constituencies']
-             if not x['slug'] == 'ikke-oplyst']
+slugs = [x['slug'] for x in kommuner['constituencies']
+         if not x['slug'] == 'ikke-oplyst']
     \end{lstlisting}
   \end{itemize}
 \end{frame}
@@ -211,17 +211,88 @@ Næste gang:
 
 \begin{frame}[fragile]{Opgave 1.4}
   \begin{lstlisting}[language=python]
-  def hent_kommune_data(kommuneslug):
-      base = 'https://www.dr.dk/tjenester/kv17-candidateapi/'
-      url = base + f'api/ballot/{kommuneslug}'
+def hent_kommune_data(kommuneslug):
+    base = 'https://www.dr.dk/tjenester/kv17-candidateapi/'
+    url = base + f'api/ballot/{kommuneslug}'
 
-      response = requests.get(url)
+    response = requests.get(url)
 
-      if response.ok:
-          return response.json()
-      else:
-          return None
+    if response.ok:
+        return response.json()
+    else:
+        return None
   \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Opgave 1.5}
+  \begin{lstlisting}[language=python, basicstyle=\tiny]
+  import pandas as pd
+
+  def rens_kommune_data(kommunejson):
+    ballot = kommunejson['ballot']['constituency']
+    parties = kommunejson['ballot']['ballotParties']
+
+    _name = ballot['slug']
+    _id = ballot['id']
+
+    for party in parties:
+        party_candidates = party['candidates']
+
+        for candidate in party_candidates:
+            _fname = candidate['firstName']
+            _lname = candidate['lastName']
+
+            data = {'id': [_id],
+                    'kommune': [_name],
+                    'letter': [candidate['partyLetter']],
+                    'party': [candidate['partyName']],
+                    'name': ['{} {}'.format(_fname, _lname)],
+                    'answers': [candidate['answerString']]
+                   }
+            try:
+                df = pd.concat([df, pd.DataFrame(data)])
+            except NameError:
+                df = pd.DataFrame(data)
+
+    return df.reset_index(drop = True)
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Opgave 1.6}
+\begin{lstlisting}[language=python]
+from time import sleep
+
+for kom in slugs:
+    sleep(2)
+    print(kom)
+    data = hent_kommune_data(kom)
+    clean = rens_kommune_data(data)
+
+    try:
+        df = pd.concat([df, pd.DataFrame(clean)])
+    except NameError:
+        df = pd.DataFrame(clean)
+\end{lstlisting}
+\end{frame}
+\begin{frame}[fragile]{Opgave 1.7}
+  \begin{lstlisting}[language=python]
+df.reset_index(drop = True)\
+  .to_csv('../data/candidates.csv',
+          index = False)
+  \end{lstlisting}
+\end{frame}
+
+\section{Næste gang/tak for i dag}
+\begin{frame}[fragile]{Næste gang/tak for i dag}
+\begin{itemize}
+\item Vi lægger en rettevejledning ud til dagens øvelser på github
+\item Vi lægger datasættet op før næste øvelsesgang - \textit{ikke} nødvendigt med hjemmearbejde!
+\pause
+\item[]
+\item[] Næste gang:
+\item Samme tid, samme sted, næste fredag.
+\item Vi skal lave noget analyse på de data i har scrapet i dag.
+\end{itemize}
 \end{frame}
 
 \end{document}
