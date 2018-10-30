@@ -1,4 +1,4 @@
-\documentclass[10pt, hyperref = {colorlinks=true, linkcolor=green}]{beamer}
+\documentclass[10pt]{beamer}
 
 \usetheme[progressbar=frametitle]{metropolis}
 \usepackage{appendixnumberbeamer}
@@ -89,17 +89,33 @@ Hvem er i?
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Setup}
+  Alt materiale ligger på GitHub
+\begin{itemize}
+  \item Åben \href{https://github.com/Kristianuruplarsen/kodeklubben}{https://github.com/Kristianuruplarsen/kodeklubben}
+  \item Klik på knappen \textit{Clone or download} og på \textit{Download ZIP}
+\end{itemize}
+
+\begin{figure}
+  \center
+  \includegraphics[width=\textwidth]{figs/setup.PNG}
+\end{figure}
+\end{frame}
+
+
 \begin{frame}[fragile]{Hvad skal vi lave?}
 \begin{itemize}
   \item<1-> Hvad mener (folketings)partierne egentligt? Gid vi kunne spørge dem...
   \item<2-> DR's kandidattest fra KV17 er stadig online!
   \item<3-> Alle kandidaternes svar er ``frit'' tilgængelige.
+  \item[]
+  \item[]<4-> Kort note om formattet:
+  \item<4-> Vi har slides der viser hvordan i kan løse alle spørgsmålene,
+  \item[]<5-> men den bedste vej frem er \textit{learning by doing}
+  \item<6-> 1) Læs dokumentation 2) spørg en sidemakker 3) google det (stackoverflow har som regel løsningen) 4) spørg os.
 \end{itemize}
 
-\pause
-\begin{itemize}
-  \item Den eneste vej frem er \textit{learning by doing}
-\end{itemize}
+
 \end{frame}
 
 \begin{frame}[fragile]{Projektet}
@@ -129,59 +145,83 @@ Næste gang:
 \end{frame}
 
 
-\begin{frame}[fragile]{Setup}
-  Alt vores materiale ligger på GitHub
-\begin{itemize}
-  \item Åben \href{https://github.com/Kristianuruplarsen/kodeklubben}{https://github.com/Kristianuruplarsen/kodeklubben}
-  \item Klik på knappen \textit{Clone or download} og på \textit{Download ZIP}
-\end{itemize}
-
-\begin{figure}
-  \center
-  \includegraphics[width=\textwidth]{figs/setup.PNG}
-\end{figure}
-\end{frame}
 
 
 
 \section{Øvelser}
-\begin{frame}[fragile]{Opgave 2.1.1}
 
-\pause
-Det link i leder efter er:
-\begin{centering}
-\href{'https://www.dr.dk/tjenester/kv17-candidateapi/api/constituency/all'}{https://www.dr.dk/tjenester/kv17-candidateapi/api/constituency/all}
-\end{centering}
-Prøv at åbne linket i en browser!
 
+\begin{frame}[fragile]{Opgave 1.1}
+  Det link i leder efter er:
+  \begin{centering}\textit{
+  \href{'https://www.dr.dk/tjenester/kv17-candidateapi/api/constituency/all'}{https://www.dr.dk/tjenester/kv17-candidateapi/api/constituency/all}}
+  \end{centering}
+  Prøv at åbne linket i en browser!
 \end{frame}
 
-\begin{frame}[fragile]{Opgave 2.1.2}
-
-\begin{itemize}
-  \item Hvis ikke i har installeret \texttt{requests} er det en god ide at gøre det nu
-  \item Google:
+\begin{frame}[fragile]{Opgave 1.2}
   \begin{itemize}
-    \item ``python requests get link''
-    \item ``python requests json''
+    \item Hvis ikke i har installeret \texttt{requests} er det en god ide at gøre det nu
+    \item Google:
+    \begin{itemize}
+      \item ``python requests get link''
+      \item ``python requests json''
+    \end{itemize}
   \end{itemize}
-\end{itemize}
 
-\pause
-\begin{lstlisting}[language=python]
-import requests
+  \begin{lstlisting}[language=python]
+  import requests
 
-url = #[FILL IN]
+  url = #[FILL IN]
 
-response = requests.get(url)
-kommuner = response.json()
-\end{lstlisting}
+  response = requests.get(url)
+  kommuner = response.json()
+  \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Opgave 2.1.3}
+\begin{frame}[fragile]{Opgave 1.3}
   \begin{itemize}
-    \item Kig i den json fil i har downloadet - er der
+    \item Kig i den json fil i har downloadet - hvordan er den struktureret?
+
+    \item I kan hente alle slugs med et loop:
+    \begin{lstlisting}[language=python]
+    container = list()
+    for x in kommuner['constituencies']:
+        if not x['slug'] == 'ikke-oplyst':
+            container.append(x['slug'])
+    \end{lstlisting}
+    \item Eller med en \textit{list comprehension}:
+    \begin{lstlisting}[language=python]
+    slugs = [x['slug'] for x in kommuner['constituencies']
+             if not x['slug'] == 'ikke-oplyst']
+    \end{lstlisting}
   \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Opgave 1.4}
+  \begin{itemize}
+    \item I skal ind i jeres developer console igen - denne gang leder i en json fil med samme navn som den kommune i har søgt på
+  \end{itemize}
+  \begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figs/console.png}
+  \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Opgave 1.4}
+  \begin{lstlisting}[language=python]
+  def hent_kommune_data(kommuneslug):
+      base = 'https://www.dr.dk/tjenester/kv17-candidateapi/'
+      url = base + f'api/ballot/{kommuneslug}'
+
+      response = requests.get(url)
+
+      if response.ok:
+          return response.json()
+      else:
+          return None
+  \end{lstlisting}
 \end{frame}
 
 \end{document}
