@@ -105,23 +105,30 @@ Hvem er i?
 \begin{frame}[fragile]{Sidste gang}
 Sidste gang downloadede og rensede vi et datasæt over danske kommunalpolitikeres holdninger:
 \begin{itemize}
-  \item Åben det datasæt i selv gemte sidste gang
-  \item Download data fra 
+  \item Åben det datasæt i selv gemte sidste gang, eller
+  \item Hent datasættet online:
+  \begin{lstlisting}[language=python]
+import pandas as pd
+
+url = 'https://raw.githubusercontent.com/'\
+      'Kristianuruplarsen/kodeklubben/master/'\
+      'data/candidates.csv'
+df = pd.read_csv(url)
+  \end{lstlisting}
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Projektet}
-
-Sidste gang:
+\textcolor{gray}{Sidste gang:}
 \begin{itemize}
-  \item Download data fra DR
+  \item[\textcolor{gray}{$\bullet$}] \textcolor{gray}{Download data fra DR}
   \begin{itemize}
-    \item internet-hacks
-    \item Interagere med nettet gennem python
+    \item[\textcolor{gray}{$\bullet$}] \textcolor{gray}{internet-hacks}
+    \item[\textcolor{gray}{$\bullet$}] \textcolor{gray}{Interagere med nettet gennem python}
   \end{itemize}
-  \item Rens datasættet og gør klar til alt det sjove
+  \item[\textcolor{gray}{$\bullet$}] \textcolor{gray}{Rens datasættet og gør klar til alt det sjove}
   \begin{itemize}
-    \item jonglere med data og formatter
+    \item[\textcolor{gray}{$\bullet$}] \textcolor{gray}{jonglere med data og formatter}
   \end{itemize}
 \end{itemize}
 
