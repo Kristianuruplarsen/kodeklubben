@@ -8,3 +8,4 @@
 *.gz
 *.toc
 *.vrb
+*.ipynb_checkpoints
