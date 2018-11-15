@@ -10,5 +10,5 @@
 *.vrb
 *.ipynb_checkpoints
 
-
-*_answers.ipynb
+*session_2_answers.ipynb
+*session_3_answers.ipynb
