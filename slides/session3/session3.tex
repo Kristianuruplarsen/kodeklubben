@@ -13,6 +13,7 @@
 
 \usepackage{listings}
 
+
 % Emulate markdown's light grey background for monospace.
 \usepackage{soul}
 \definecolor{Light}{gray}{.96}
@@ -64,10 +65,10 @@
 \newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
 
 \title{KodeKlubben 2.0}
-\subtitle{Øvelsesgang 1}
+\subtitle{Øvelsesgang 2}
 % \date{\today}
 \date{\today}
-\author{KUOL, JJE, HFB}
+\author{Kristian Urup Olesen Larsen, Jakob Jul Elben}
 \institute{Økonomisk Institut, KU}
 % \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
 
@@ -75,15 +76,13 @@
 
 \maketitle
 
-\begin{frame}[fragile]{Velkommen!}
+\begin{frame}[fragile]{Velkommen (igen)!}
 Hvem er vi?
-\pause
 \begin{itemize}
   \item Økonomistuderende
   \item RA's på Økonomisk Institut
   \item Arbejder typisk i Python, R, STATA eller SAS
 \end{itemize}
-\pause
 Hvem er i?
 % \begin{itemize}
 %   \item Det er sådan set ligemeget, vi skal bare have det sjovt og lære noget \textit{data science}.
@@ -103,39 +102,37 @@ Hvem er i?
 \end{figure}
 \end{frame}
 
-
-\begin{frame}[fragile]{Hvad skal vi lave?}
+\begin{frame}[fragile]{Sidste gang}
+Sidste gang downloadede og rensede vi et datasæt over danske kommunalpolitikeres holdninger:
 \begin{itemize}
-  \item<1-> Hvad mener (folketings)partierne egentligt? Gid vi kunne spørge dem...
-  \item<2-> DR's kandidattest fra KV17 er stadig online!
-  \item<3-> Alle kandidaternes svar er ``frit'' tilgængelige.
-  \item[]
-  \item[]<4-> Kort note om formattet:
-  \item<4-> Vi har slides der viser hvordan i kan løse alle spørgsmålene,
-  \item[]<5-> men den bedste vej frem er \textit{learning by doing}
-  \item<6-> 1) Læs dokumentation 2) spørg en sidemakker 3) google det (stackoverflow har som regel løsningen) 4) spørg os.
+  \item Åben det datasæt i selv gemte sidste gang, eller
+  \item Hent datasættet online:
+  \begin{lstlisting}[language=python]
+import pandas as pd
+
+url = 'https://raw.githubusercontent.com/'\
+      'Kristianuruplarsen/kodeklubben/master/'\
+      'data/candidates.csv'
+df = pd.read_csv(url)
+  \end{lstlisting}
 \end{itemize}
-
-
 \end{frame}
 
 \begin{frame}[fragile]{Projektet}
-Op til KV17 lavede DR en \href{https://www.dr.dk/nyheder/politik/kv17/kandidat-testen}{kandidattest}. Alle kandidaterne har selvfølgelig svaret på spørgsmålene. De svar vil vi gerne have.
-
-Denne gang:
+\textcolor{gray}{Sidste gang:}
 \begin{itemize}
-  \item Download data fra DR
+  \item[\textcolor{gray}{$\bullet$}] \textcolor{gray}{Download data fra DR}
   \begin{itemize}
-    \item internet-hacks
-    \item Interagere med nettet gennem python
+    \item[\textcolor{gray}{$\bullet$}] \textcolor{gray}{internet-hacks}
+    \item[\textcolor{gray}{$\bullet$}] \textcolor{gray}{Interagere med nettet gennem python}
   \end{itemize}
-  \item Rens datasættet og gør klar til alt det sjove
+  \item[\textcolor{gray}{$\bullet$}] \textcolor{gray}{Rens datasættet og gør klar til alt det sjove}
   \begin{itemize}
-    \item jonglere med data og formatter
+    \item[\textcolor{gray}{$\bullet$}] \textcolor{gray}{jonglere med data og formatter}
   \end{itemize}
 \end{itemize}
 
-Næste gang:
+Denne gang:
 \begin{itemize}
   \item Alt det sjove.
   \begin{itemize}
@@ -151,149 +148,70 @@ Næste gang:
 
 \section{Øvelser}
 
-
-\begin{frame}[fragile]{Opgave 1.1}
-  Det link i leder efter er:
-  \begin{centering}\textit{
-  \href{'https://www.dr.dk/tjenester/kv17-candidateapi/api/constituency/all'}{https://www.dr.dk/tjenester/kv17-candidateapi/api/constituency/all}}
-  \end{centering}
-  Prøv at åbne linket i en browser!
+\begin{frame}[fragile]{Structure data}
+Load data, enten dem i gemte sidste gang, eller fra github (brug koden fra slides)
+ \textit{Hint:} denne gang skal i bruge pakken \texttt{pandas} (installer den med pip hvis i ikke allerede har den) som er pythons dataset-workhorse. Som regel kan man google sig til en løsning med søgeord a-la "pandas load dataset from github", "pandas convert to string" osv.
 \end{frame}
 
-\begin{frame}[fragile]{Opgave 1.2}
-  \begin{itemize}
-    \item Hvis ikke i har installeret \texttt{requests} er det en god ide at gøre det nu
-    \item Google:
-    \begin{itemize}
-      \item ``python requests get link''
-      \item ``python requests json''
-    \end{itemize}
-  \end{itemize}
-
+\begin{frame}[fragile]{Structure data}
+Dette gøres ved
   \begin{lstlisting}[language=python]
-import requests
+import pandas as pd
 
-url = #[FILL IN]
+url = 'https://raw.githubusercontent.com/'\
+      'Kristianuruplarsen/kodeklubben/master'\
+      '/data/candidates.csv'
 
-response = requests.get(url)
-kommuner = response.json()
-  \end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Opgave 1.3}
-  \begin{itemize}
-    \item Kig i den json fil i har downloadet - hvordan er den struktureret?
-
-    \item I kan hente alle slugs med et loop:
-    \begin{lstlisting}[language=python]
-slugs = list()
-for x in kommuner['constituencies']:
-    if not x['slug'] == 'ikke-oplyst':
-        slugs.append(x['slug'])
-    \end{lstlisting}
-    \item Eller med en \textit{list comprehension}:
-    \begin{lstlisting}[language=python]
-slugs = [x['slug'] for x in kommuner['constituencies']
-         if not x['slug'] == 'ikke-oplyst']
-    \end{lstlisting}
-  \end{itemize}
-\end{frame}
-
-
-\begin{frame}[fragile]{Opgave 1.4}
-  \begin{itemize}
-    \item I skal ind i jeres developer console igen - denne gang leder i en json fil med samme navn som den kommune i har søgt på
-  \end{itemize}
-  \begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{figs/console.png}
-  \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Opgave 1.4}
-  \begin{lstlisting}[language=python]
-def hent_kommune_data(kommuneslug):
-    base = 'https://www.dr.dk/tjenester/kv17-candidateapi/'
-    url = base + f'api/ballot/{kommuneslug}'
-
-    response = requests.get(url)
-
-    if response.ok:
-        return response.json()
-    else:
-        return None
-  \end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Opgave 1.5}
-  \begin{lstlisting}[language=python, basicstyle=\tiny]
-  import pandas as pd
-
-  def rens_kommune_data(kommunejson):
-    ballot = kommunejson['ballot']['constituency']
-    parties = kommunejson['ballot']['ballotParties']
-
-    _name = ballot['slug']
-    _id = ballot['id']
-
-    for party in parties:
-        party_candidates = party['candidates']
-
-        for candidate in party_candidates:
-            _fname = candidate['firstName']
-            _lname = candidate['lastName']
-
-            data = {'id': [_id],
-                    'kommune': [_name],
-                    'letter': [candidate['partyLetter']],
-                    'party': [candidate['partyName']],
-                    'name': ['{} {}'.format(_fname, _lname)],
-                    'answers': [candidate['answerString']]
-                   }
-            try:
-                df = pd.concat([df, pd.DataFrame(data)])
-            except NameError:
-                df = pd.DataFrame(data)
-
-    return df.reset_index(drop = True)
-  \end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Opgave 1.6}
-\begin{lstlisting}[language=python]
-from time import sleep
-
-for kom in slugs:
-    sleep(2)
-    print(kom)
-    data = hent_kommune_data(kom)
-    clean = rens_kommune_data(data)
-
-    try:
-        df = pd.concat([df, pd.DataFrame(clean)])
-    except NameError:
-        df = pd.DataFrame(clean)
+df_raw = pd.read_csv(url)
 \end{lstlisting}
 \end{frame}
-\begin{frame}[fragile]{Opgave 1.7}
+
+\begin{frame}[fragile]{Structure data}
+Lige nu er kandidaternes svar registreret i en enkelt streng af tal mellem 1 og 5. Et 1-tal svarer til at kandidaten har svaret det mest venstrestille ("Meget uenig"), 5 svarer ligeledes til det meste højrestillede ("Meget enig").
+
+Konverter kolonnen 'answers' til en streng-variable og drop de kandidater der ikke har svaret på alle spørgsmålene fra datasættet. Hvor mange observationer mister i?
+
+Skriv dernæst en funktion der spreder answerstring ud over 15 variable (hint: stackoverflow).
+\end{frame}
+
+
+\begin{frame}[fragile]{Structure data}
+Dette gøres ved
   \begin{lstlisting}[language=python]
-df.reset_index(drop = True)\
-  .to_csv('../data/candidates.csv',
-          index = False)
-  \end{lstlisting}
+df = df_raw
+
+df['answers'] = df['answers'].astype(str)   # convert to string
+df['Ncomplete'] = df.answers.apply(len)     # find no.
+                                            # answered questions
+df = df.query("Ncomplete == 15").reset_index(drop = True)
+            # remove if less than 15 answers are answered
+
+df = pd.concat([df, df['answers'].
+    apply(lambda x: pd.Series(list(x)))], axis = 1)
+
+df
+\end{lstlisting}
 \end{frame}
 
-\section{Næste gang/tak for i dag}
-\begin{frame}[fragile]{Næste gang/tak for i dag}
-\begin{itemize}
-\item Vi lægger en rettevejledning ud til dagens øvelser på github
-\item Vi lægger datasættet op før næste øvelsesgang - \textit{ikke} nødvendigt med hjemmearbejde!
-\pause
-\item[]
-\item[] Næste gang:
-\item Samme tid, samme sted, næste fredag.
-\item Vi skal lave noget analyse på de data i har scrapet i dag.
-\end{itemize}
+\begin{frame}[fragile]{PCA}
+Nu har i et pænt, færdigt datasæt. Næste step er at lave den interaktive figur i så til at starte med sidste fredag. For at lave den skal vi igennem et par trin:
+
+  \begin{itemize}
+    \item  Vi skal have kollapset svarende på de 15 spørgsmål til tre akser - til det bruger vi PCA
+    \item  Vi skal have skrevet noget kode der producerer interaktive figurer, i får noget af koden udleveret her, fordi det kræver en hel del ligegyldig kode at sætte op.
+  \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{PCA}
+Opgave 2.1 - PCA (≈machine learning)
+
+Ligesom at pandas er pythons workhorse for datasæt, er scikit-learn goto pakken for machine learning i python. Start med at installere scikit learn. Læs derefter lidt af denne guide til PCA modulet. Forsøg at få et overblik over
+
+  \begin{itemize}
+    \item Hvordan man importerer PCA modulet, og hvordan man bruger det
+    \item  Hvordan PCA virker - hvad er idéen bag algoritmen?
+  \end{itemize}
+
+Estimer en PCA model med 3 komponenter på de 15 kolonner med politikernes svar, jeres output skal have tre kolonner og lige så mange rækker som i har observationer i datasættet.
+\end{frame}
 \end{document}
